@@ -1,0 +1,99 @@
+const bankOne = [
+  {
+    keyCode: 81,
+    keyTrigger: "Q",
+    id: "Heater-1",
+    url: "https://s3.amazonaws.com/freecodecamp/drums/Heater-1.mp3"
+  },
+  {
+    keyCode: 87,
+    keyTrigger: "W",
+    id: "Heater-2",
+    url: "https://s3.amazonaws.com/freecodecamp/drums/Heater-2.mp3"
+  },
+  {
+    keyCode: 69,
+    keyTrigger: "E",
+    id: "Heater-3",
+    url: "https://s3.amazonaws.com/freecodecamp/drums/Heater-3.mp3"
+  },
+  {
+    keyCode: 65,
+    keyTrigger: "A",
+    id: "Heater-4",
+    url: "https://s3.amazonaws.com/freecodecamp/drums/Heater-4_1.mp3"
+  },
+  {
+    keyCode: 83,
+    keyTrigger: "S",
+    id: "Clap",
+    url: "https://s3.amazonaws.com/freecodecamp/drums/Heater-6.mp3"
+  },
+  {
+    keyCode: 68,
+    keyTrigger: "D",
+    id: "Open-HH",
+    url: "https://s3.amazonaws.com/freecodecamp/drums/Dsc_Oh.mp3"
+  },
+  {
+    keyCode: 90,
+    keyTrigger: "Z",
+    id: "Kick-n'-Hat",
+    url: "https://s3.amazonaws.com/freecodecamp/drums/Kick_n_Hat.mp3"
+  },
+  {
+    keyCode: 88,
+    keyTrigger: "X",
+    id: "Kick",
+    url: "https://s3.amazonaws.com/freecodecamp/drums/RP4_KICK_1.mp3"
+  },
+  {
+    keyCode: 67,
+    keyTrigger: "C",
+    id: "Closed-HH",
+    url: "https://s3.amazonaws.com/freecodecamp/drums/Cev_H2.mp3"
+  }
+];
+
+const drumMachine = document.querySelector("#drum-machine");
+
+bankOne.forEach((x, idx) => {
+  const div = document.createElement("div");
+  div.classList.add("drum-pad");
+  div.id = x.id.replace(/[^\w\s]/gi, '');
+
+  const audio = document.createElement("audio");
+  audio.id = x.keyTrigger;
+  audio.classList.add("clip");
+  audio.src = x.url;
+
+  div.appendChild(audio);
+  const textnode = document.createTextNode(x.keyTrigger);
+  div.appendChild(textnode);
+  drumMachine.appendChild(div);
+});
+
+document.addEventListener("keyup", (e) => {
+  let obj = bankOne.find((x) => x.keyCode === e.keyCode);
+  if (obj) {
+    playDrum(obj.keyTrigger);
+  }
+});
+
+drumMachine.addEventListener("click", (e) => {
+  playDrum(e.target.innerText);
+});
+
+function playDrum(key) {
+  let obj = bankOne.find((x) => x.keyTrigger === key);
+  if (obj) {
+    document.querySelector(`#${key}`).play();
+    document.querySelector("#display").innerText = obj.id;
+    document.querySelector(`#${obj.id.replace(/[^\w\s]/gi, '')}`).classList.add("active");
+    setTimeout(() => {
+      document
+        .querySelectorAll(".active")
+        .forEach((el) => el.classList.remove("active"));
+    }, 200);
+  }
+}
