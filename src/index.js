@@ -81,7 +81,7 @@ const Presentation = () => (
 			<Heading size={1} fit caps color="white">
 				May 2020: Vanilla JavaScript Drum Machine
 			</Heading>
-			<Link target="_blank" href="#">
+			<Link target="_blank" href="https://github.com/jWatsonDev/may-2020-fcc-vanilla-js-drumpad">
 				<Text fontSize="1.5em" bold caps color="white">
 					View on Github
 				</Text>
